@@ -40,7 +40,7 @@ services:
     expose:
       - 9501
     extra_hosts:
-      - "www.site1.com:172.17.0.1"
+      - "www.php74.com:172.17.0.1"
     volumes:
       - ${SOURCE_DIR}:/www/:rw
       - ${PHP_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
@@ -70,7 +70,7 @@ services:
       - 9507
       - 9508
     extra_hosts:
-      - "www.hadmin3.dev:172.18.0.1"
+      - "www.php81.com:172.17.0.1"
     volumes:
       - ${SOURCE_DIR}:/www/:rw
       - ${PHP81_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
@@ -80,6 +80,55 @@ services:
     restart: always
     cap_add:
       - SYS_PTRACE
+    networks:
+      - default
+
+  php82:
+    build:
+      context: ./services/php82
+      args:
+        PHP_VERSION: php:${PHP82_VERSION}-fpm-alpine3.16
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        PHP_EXTENSIONS: ${PHP82_EXTENSIONS}
+        TZ: "$TZ"
+    container_name: php82
+    ports:
+      - "9509:9509"
+      - "9510:9510"
+    expose:
+      - 9509
+      - 9510
+    extra_hosts:
+      - "www.php82.com:172.17.0.1"
+    volumes:
+      - ${SOURCE_DIR}:/www/:rw
+      - ${PHP82_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ${PHP82_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ${PHP82_LOG_DIR}:/var/log/php
+      - ${DATA_DIR}/composer:/tmp/composer
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
+  drupal10:
+    image: drupal:latest
+    container_name: drupal10
+    ports:
+      - "8002:80"
+#    extra_hosts:
+#      - "www.drupal10.com:172.17.0.1"
+    volumes:
+      # - D:\Data\dnmp\www\drupal10:/var/www/html
+      - D:\Data\dnmp\www\drupal10\modules:/var/www/html/modules
+      - D:\Data\dnmp\www\drupal10\profiles:/var/www/html/profiles
+      - D:\Data\dnmp\www\drupal10\themes:/var/www/html/themes
+      # this takes advantage of the feature in Docker that a new anonymous
+      # volume (which is what we're creating here) will be initialized with the
+      # existing content of the image at the same location
+      - D:\Data\dnmp\www\drupal10\sites:/var/www/html/sites
+    restart: always
     networks:
       - default
 

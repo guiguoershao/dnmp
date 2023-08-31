@@ -58,7 +58,7 @@ services:
     build:
       context: ./services/php81
       args:
-        PHP_VERSION: php:${PHP81_VERSION}-fpm-alpine3.16
+        PHP_VERSION: php:${PHP81_VERSION}-fpm-alpine3.17
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         PHP_EXTENSIONS: ${PHP81_EXTENSIONS}
         TZ: "$TZ"
@@ -87,7 +87,7 @@ services:
     build:
       context: ./services/php82
       args:
-        PHP_VERSION: php:${PHP82_VERSION}-fpm-alpine3.16
+        PHP_VERSION: php:${PHP82_VERSION}-fpm-alpine3.17
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         PHP_EXTENSIONS: ${PHP82_EXTENSIONS}
         TZ: "$TZ"
